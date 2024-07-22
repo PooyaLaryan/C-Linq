@@ -15,13 +15,11 @@ List<Person> people1 = new List<Person>
     new Person{ Id = 7 , Name = "G", LastName = "GG", BirthDay = DateTime.Now.AddYears(-6)},
     new Person{ Id = 8 , Name = "H", StandardId = 3, LastName = "HH", BirthDay = DateTime.Now.AddYears(-5)},
 };
-
-
 IList<Bullet> bullets = new List<Bullet>
 {
     new Bullet{ Title = "Title1"},
-    new Bullet{ Title = "Title1"},
-    new Bullet{ Title = "Title1"},
+    new Bullet{ Title = "Title2"},
+    new Bullet{ Title = "Title3"},
 };
 List<Loan> loans = new List<Loan>
 {
@@ -38,16 +36,13 @@ List<Loan> loans = new List<Loan>
     new Loan{ Dong = 3000, Number = 12, Amount = 30000, Bullets = bullets},
     new Loan{ Dong = 4000, Number = 12, Amount = 40000, Bullets = bullets},
 };
-
 List<int> ids = new List<int> { 1, 5, 6, 7 };
-
 List<Person> people2 = new List<Person>
 {
     new Person{ Id = 1 , Name = "A"},
     new Person{ Id = 2 , Name = "B"},
     new Person{ Id = 3 , Name = "C"},
 };
-
 List<Item> items = new List<Item>
 {
     new Item{ Id = 1, Name = "TV" , Amount = 12000000},
@@ -55,7 +50,6 @@ List<Item> items = new List<Item>
     new Item{ Id = 3, Name = "Mobile Android" , Amount = 1255142},
     new Item{ Id = 4, Name = "PS5" , Amount = 20000000},
 };
-
 List<ItemPerson> itemsPeople = new List<ItemPerson>
 {
     new ItemPerson{ ItemId = 1, PersonId = 1},
@@ -64,31 +58,24 @@ List<ItemPerson> itemsPeople = new List<ItemPerson>
     new ItemPerson{ ItemId = 3, PersonId = 7},
     new ItemPerson{ ItemId = 4, PersonId = 5},
 };
-
 List<Standard> standards = new List<Standard>
 {
    new Standard{ Id = 1 , Name = "Standard 1"},
    new Standard{ Id = 2 , Name = "Standard 2"}
 };
-
 var intList1 = Enumerable.Range(1, 20).Select(x => Random.Shared.Next(10, 99)).ToList();
 var intList2 = Enumerable.Range(1, 20).Select(x => Random.Shared.Next(10, 99)).ToList();
-
 List<string> collection1 = new List<string> { "One", "Two", "Three", "Four", "Five", "Six" };
 List<string> collection2 = new List<string> { "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten" };
-
 List<string> farsiNum = new List<string> {
 "٠","١","٢","٣","٤","٥","٦","٧","٨","٩",
 "۰","۱","۲","۳","۴","۵","۶","۷","۸","۹",
 " "
 };
-
 List<string> englishNum = new List<string> {
 "0","1","2","3","4","5","6","7","8","9",
 };
-
 List<int> ints = Enumerable.Range(1, 320).Select(x => Random.Shared.Next(1, 100000)).ToList();
-
 List<GroupSumClass> groupSumClasses = new List<GroupSumClass> {
     new GroupSumClass{ Code = 1 , Price = 20000},
     new GroupSumClass{ Code = 1 , Price = 20000},
@@ -96,6 +83,9 @@ List<GroupSumClass> groupSumClasses = new List<GroupSumClass> {
     new GroupSumClass{ Code = 2 , Price = 20000},
     new GroupSumClass{ Code = 1 , Price = 20000},
 };
+object[] dataForOftype = { "Hello", 123, 12.5, true, DateTime.Now };
+var name = new[] { "Ali", "Reza", "Pouya" };
+var age = new[] { 12, 23, 44 };
 
 #endregion
 
@@ -329,6 +319,34 @@ Console.WriteLine(listOfList.Count());
 var pList = people1.Where(x => ids.Contains(x.Id)).ToList();
 #endregion
 
+#region OfType
+Console.Clear();
+var output = dataForOftype.OfType<string>().ToList();
+output.ForEach(x => Console.WriteLine(x));
+#endregion
+
+#region selectMany
+Console.Clear();
+var selecrmanyOutput = loans.SelectMany(x=>x.Bullets).Select(x=>x.Title).ToList();
+selecrmanyOutput.ForEach(x => Console.WriteLine(x));
+#endregion
+
+#region Zip
+Console.Clear();
+var zipOurput = name.Zip(age, (name, age) => (name, age)).ToList();
+zipOurput.ForEach(x => Console.WriteLine($"Name :{x.name} - Age : {x.age} {Environment.NewLine}"));
+#endregion
+
+#region DistinctBy
+Console.Clear();
+var distinctByOutput = itemsPeople.DistinctBy(x=>x.ItemId).ToList();
+distinctByOutput.ForEach(x => Console.WriteLine(x.ItemId));
+
+Console.Clear();
+var distinctOutput = itemsPeople.Distinct().ToList();
+distinctOutput.ForEach(x => Console.WriteLine(x.ItemId));
+
+#endregion
 
 Mobile("+989376363535");
 
