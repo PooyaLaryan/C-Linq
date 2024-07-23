@@ -43,6 +43,7 @@ List<Person> people2 = new List<Person>
     new Person{ Id = 2 , Name = "B"},
     new Person{ Id = 3 , Name = "C"},
 };
+
 List<Item> items = new List<Item>
 {
     new Item{ Id = 1, Name = "TV" , Amount = 12000000},
