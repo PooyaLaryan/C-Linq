@@ -351,6 +351,14 @@ distinctOutput.ForEach(x => Console.WriteLine(x.ItemId));
 
 Mobile("+989376363535");
 
+#region Concatenate list items with commas except the last one
+var JoinListWithComaExcetLast = string.Join(",", Enumerable
+    .Range(1, 3)
+    .Select(_ => $"{new Random().Next(1000)}")
+    .ToList());
+Console.WriteLine(JoinListWithComaExcetLast);
+#endregion
+
 Console.ReadLine();
 
 #region Methods
