@@ -1,7 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using Bogus;
 using LinqCode;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using Person = LinqCode.Person;
 
 #region Init Data
 List<Person> people1 = new List<Person>
@@ -330,6 +332,27 @@ output.ForEach(x => Console.WriteLine(x));
 Console.Clear();
 var selecrmanyOutput = loans.SelectMany(x=>x.Bullets).Select(x=>x.Title).ToList();
 selecrmanyOutput.ForEach(x => Console.WriteLine(x));
+
+
+var loans2 = Enumerable.Range(1, 3).Select(_ => new Loan
+{
+    Amount = Random.Shared.Next(0, 100),
+    Dong = Random.Shared.Next(0, 100),
+    Number = Random.Shared.Next(0, 100),
+    Bullets = Enumerable.Range(1, Random.Shared.Next(2, 4)).Select(_ => new Bullet
+    {
+        Title = new Faker().Random.Word(),
+    }).ToList(),
+}).ToList();
+
+
+var loans2Result = loans2.SelectMany(x => x.Bullets, (x, y) => new {
+    Amount = x.Amount,
+    Dong = x.Dong,
+    Number = x.Number,
+    Title = y.Title,
+});
+
 #endregion
 
 #region Zip
