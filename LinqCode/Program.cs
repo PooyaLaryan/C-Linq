@@ -345,7 +345,6 @@ var loans2 = Enumerable.Range(1, 3).Select(_ => new Loan
     }).ToList(),
 }).ToList();
 
-
 var loans2Result = loans2.SelectMany(x => x.Bullets, (x, y) => new {
     Amount = x.Amount,
     Dong = x.Dong,
