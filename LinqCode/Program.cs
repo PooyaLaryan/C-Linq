@@ -352,6 +352,15 @@ var loans2Result = loans2.SelectMany(x => x.Bullets, (x, y) => new {
     Title = y.Title,
 });
 
+
+var loan3 = new Loan
+{
+    Amount = new Faker().Random.Int(),
+    Dong = new Faker().Random.Int(),
+    Number = new Faker().Random.Int(),
+    Bullets = new Faker().Make(3, () => new Bullet { Title = new Faker().Random.Word() })
+};
+
 #endregion
 
 #region Zip
