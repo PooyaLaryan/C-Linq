@@ -90,6 +90,7 @@ object[] dataForOftype = { "Hello", 123, 12.5, true, DateTime.Now };
 var name = new[] { "Ali", "Reza", "Pouya" };
 var age = new[] { 12, 23, 44 };
 
+
 #endregion
 
 #region Diff
@@ -390,6 +391,35 @@ var JoinListWithComaExcetLast = string.Join(",", Enumerable
 Console.WriteLine(JoinListWithComaExcetLast);
 #endregion
 
+
+//Left Join 
+var leftJoinPeople = from people in people1
+                join item in itemsPeople on people.Id equals item.PersonId into gg
+                from subgroup in gg.DefaultIfEmpty()
+                select new
+                {
+                    a = people.Name,
+                    b = subgroup?.ItemId?? null,
+                };
+
+
+
+#region Any
+var driverLocation1 = new DriverLocation
+{
+    Shipments = new List<Shipment> { new Shipment { Id = 1 }, new Shipment { Id = 2 } , new Shipment { Id = 15} }
+};
+
+var driverLocation2 = new DriverLocation
+{
+    Shipments = null
+};
+
+bool has14Id1 = driverLocation1.Shipments.Any(x => x.Id == 15);
+bool has14Id2 = driverLocation2.Shipments?.Any(x => x.Id == 15) ?? false;
+
+
+#endregion
 Console.ReadLine();
 
 #region Methods
@@ -417,4 +447,6 @@ class Compare : IEqualityComparer<Person>
     }
 }
 #endregion
+
+
 

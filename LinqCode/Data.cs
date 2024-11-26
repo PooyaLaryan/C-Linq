@@ -69,4 +69,15 @@ namespace LinqCode
         public int Code { get; set; }
         public decimal Price { get; set; }
     }
+
+
+    class DriverLocation
+    {
+        public IList<Shipment> Shipments { get; set; }
+    }
+
+    class Shipment
+    {
+        public int Id { get; set; }
+    }
 }
