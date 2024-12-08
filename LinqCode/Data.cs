@@ -80,4 +80,30 @@ namespace LinqCode
     {
         public int Id { get; set; }
     }
+
+    public enum FleetEventType : byte
+    {
+        None = 0,
+        Delivery = 1,
+        UnsuccessfulDelivery = 2,
+        UnsuccessfulPickup = 3,
+    }
+    class FleetEvent
+    {
+        public int FleetId { get; set; }
+        public IEnumerable<FleetEventDetail> Details { get; set; }
+    }
+
+    class FleetEventDetail
+    {
+        public int Count { get; set; }
+        public FleetEventType FleetEventType { get; set; }
+    }
+
+    class FleetMetrics
+    {
+        public int FleetId { get; set; }
+        public FleetEventType Type { get; set; }
+        public DateTime CreateDate { get; set; }
+    }
 }

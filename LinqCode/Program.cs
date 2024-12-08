@@ -420,7 +420,36 @@ bool has14Id2 = driverLocation2.Shipments?.Any(x => x.Id == 15) ?? false;
 
 
 #endregion
-Console.ReadLine();
+
+
+IList<FleetMetrics> metrics = new List<FleetMetrics>();
+for (int i = 0; i < 1000; i++)
+{
+    metrics.Add(new FleetMetrics
+                        {   
+                            FleetId = Random.Shared.Next(1,10), 
+                            Type = (FleetEventType)Random.Shared.Next(1,4), 
+                            CreateDate = DateTime.Now.AddDays(Random.Shared.Next(1,3))
+                        });
+};
+var fleetEventType = FleetEventType.None;
+
+var fleetEvents = metrics
+    .Where(x => fleetEventType == FleetEventType.None ? true : x.Type == fleetEventType)
+    .GroupBy(g => g.FleetId)
+    .Select(group => new FleetEvent
+    {
+        FleetId = group.Key,
+        Details = group.GroupBy(x => x.Type)
+        .Select(typeGroup => new FleetEventDetail
+        {
+            FleetEventType = typeGroup.Key,
+            Count = typeGroup.Count()
+        }).ToList()
+    }).ToList();
+
+
+Console.ReadKey();
 
 #region Methods
 string Mobile(string mobileNumber)
@@ -447,6 +476,3 @@ class Compare : IEqualityComparer<Person>
     }
 }
 #endregion
-
-
-
