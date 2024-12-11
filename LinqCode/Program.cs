@@ -5,6 +5,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Person = LinqCode.Person;
 
+List<int> randomList = new List<int>();
+for(int i = 1;i <= 10; i++)
+{
+    randomList.Add( Random.Shared.Next(0,5));
+}
+
 #region Init Data
 List<Person> people1 = new List<Person>
 {
