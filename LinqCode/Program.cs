@@ -476,6 +476,15 @@ for (int i = 0; i < 10; i++)
     });
 }
 
+List<DriverLocation> locations2 = new List<DriverLocation>();
+for (int i = 0;i < 10; i++)
+{
+    locations2.Add(new DriverLocation
+    {
+        Shipments = null
+    });
+}
+
 var location = locations[0];
 SendToVendorDto sendToVendorDto = new SendToVendorDto
 {
@@ -485,6 +494,11 @@ SendToVendorDto sendToVendorDto = new SendToVendorDto
 SendToVendorDto sendToVendor2 = new SendToVendorDto
 {
     Vendor = locations.Where(x => x.Shipments?.Any(a => a.VendorId == (int)Vendors.Okala) ?? false).Select(x => SendToVendor.Okala).FirstOrDefault(),
+};
+
+SendToVendorDto sendToVendor3 = new SendToVendorDto
+{
+    Vendor = locations2.Where(x => x.Shipments?.Any(a => a.VendorId == (int)Vendors.Okala) ?? false).Select(x => SendToVendor.Okala).FirstOrDefault(),
 };
 
 

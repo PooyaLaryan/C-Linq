@@ -73,7 +73,7 @@ public class GroupSumClass
 
 class DriverLocation
 {
-    public IList<Shipment> Shipments { get; set; }
+    public IList<Shipment>? Shipments { get; set; }
 }
 
 class Shipment
