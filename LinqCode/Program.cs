@@ -455,6 +455,39 @@ var fleetEvents = metrics
     }).ToList();
 
 
+List<DriverLocation> locations = new List<DriverLocation>();
+for (int i = 0; i < 10; i++)
+{
+    int vendor = 0;
+    
+    do
+    {
+        vendor = Enum.GetValues<Vendors>().Cast<int>().ToList()[Random.Shared.Next(0, 7)];
+    } while (vendor == (int)Vendors.Okala);
+
+    locations.Add(new DriverLocation
+    {
+        Shipments = new List<Shipment> {
+            new Shipment {
+                Id = new Faker().Random.Int(100000,9999999),
+                VendorId = vendor
+            }
+        }.ToList()
+    });
+}
+
+var location = locations[0];
+SendToVendorDto sendToVendorDto = new SendToVendorDto
+{
+    Vendor = location.Shipments?.Any(x => x.VendorId == (int)Vendors.Okala) ?? false ? SendToVendor.Okala : default,
+};
+
+SendToVendorDto sendToVendor2 = new SendToVendorDto
+{
+    Vendor = locations.Where(x => x.Shipments?.Any(a => a.VendorId == (int)Vendors.Okala) ?? false).Select(x => SendToVendor.Okala).FirstOrDefault(),
+};
+
+
 Console.ReadKey();
 
 #region Methods
