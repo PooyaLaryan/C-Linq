@@ -1,9 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Bogus;
 using LinqCode;
+using LinqCode.FleetPreAssignmentState;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Person = LinqCode.Person;
+
 
 List<int> randomList = new List<int>();
 for(int i = 1;i <= 10; i++)
@@ -501,6 +503,9 @@ SendToVendorDto sendToVendor3 = new SendToVendorDto
     Vendor = locations2.Where(x => x.Shipments?.Any(a => a.VendorId == (int)Vendors.Okala) ?? false).Select(x => SendToVendor.Okala).FirstOrDefault(),
 };
 
+
+FleetPreAssignmentStateQuery fleetPreAssignmentStateQuery = new();
+fleetPreAssignmentStateQuery.Run();
 
 Console.ReadKey();
 
