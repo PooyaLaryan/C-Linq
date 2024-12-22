@@ -59,5 +59,10 @@ namespace LinqCode
             date = date.ToUniversalTime();
             return TimeZoneInfo.ConvertTimeFromUtc(date, TimeZoneInfo.FindSystemTimeZoneById("Iran Standard Time"));
         }
+
+        public static long ToLongNumericDateTime(this DateTime dateTime)
+        {
+            return long.Parse($"{dateTime.Year:0000}{dateTime.Month:00}{dateTime.Day:00}{dateTime.Hour:00}{dateTime.Minute:00}{dateTime.Second:00}{dateTime.Millisecond:000}");
+        }
     }
 }

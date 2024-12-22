@@ -11,12 +11,11 @@ namespace LinqCode.FleetPreAssignmentState
     public class FleetPreAssignmentStateQuery
     {
         private readonly IList<FlatFleetPreAssignmentStateDto> flatFleetPreAssignmentStateDtos;
+        private readonly List<long> dispatchRequestIds = new List<long>();
+        DateTime date = DateTime.Now;
+        
         public FleetPreAssignmentStateQuery()
         {
-            DateTime date = DateTime.Now;
-
-            List<long> dispatchRequestIds = new List<long>();
-
             for (int i = 0; i < 5; i++)
             {
                 dispatchRequestIds.Add(Random.Shared.Next(1000000, 9999999));
@@ -61,12 +60,26 @@ namespace LinqCode.FleetPreAssignmentState
                 .Where(x => x.DispatchRequestId == dispatchRequestIds.DispatchRequestId)
                 .ToList();
 
-            var result = FleetPreAssignmentMapper(fleetPreassignmentDispatchRequest, true);
+            var result = FleetPreAssignmentMapper(dispatchRequestIds.DispatchRequestId, fleetPreassignmentDispatchRequest, true);
         }
 
-        //private IEnumerable<DeliveryServiceProviderRequestMapper> DeliveryServiceProviderRequestMapper { get; }
+        private IEnumerable<DeliveryServiceProviderRequestMapper> DeliveryServiceProviderRequestMapper
+        {
+            get
+            {
+                var randomDate = date.AddDays(Random.Shared.Next(-2, 1)).AddHours(Random.Shared.Next(-5, 6)).AddMinutes(Random.Shared.Next(-20, 21)).AddSeconds(Random.Shared.Next(-50, 50));
 
-        private FleetPreAssignmentStateListReturnDto FleetPreAssignmentMapper(IEnumerable<FlatFleetPreAssignmentStateDto> fullInfoFleetPreAssignmentStates, bool isFleetAssigned)
+                return Enumerable.Range(0, 200).Select(x => new DeliveryServiceProviderRequestMapper
+                {
+                    DispatchRequestId = dispatchRequestIds[Random.Shared.Next(0, dispatchRequestIds.Count)],
+                    CreateDate = randomDate.ToPersianDateTimeLongNumeric(),
+                    DeliveryServiceProviderId = (byte)Random.Shared.Next(0, 6),
+                    DeliveryServiceProviderOrderId = Random.Shared.Next(1000000,9999999).ToString(),
+                });  
+            }
+        }
+
+        private FleetPreAssignmentStateListReturnDto FleetPreAssignmentMapper(long dispatchRequestId, IEnumerable<FlatFleetPreAssignmentStateDto> fullInfoFleetPreAssignmentStates, bool isFleetAssigned)
         {
             return new()
             {
@@ -81,11 +94,11 @@ namespace LinqCode.FleetPreAssignmentState
                     {
                         DeliveryServiceProviderId = deliveryServiceProviderIdGroup.Key,
 
-                        //DeliveryServiceProviderOrderId = DeliveryServiceProviderRequestMapper
-                        //                                        .Where(x => x.DeliveryServiceProviderId == deliveryServiceProviderIdGroup.Key && x.DispatchRequestId == dispatchRequestId && x.IsActive == true)
-                        //                                        .OrderByDescending(o => o.CreateDate)
-                        //                                        .FirstOrDefault()
-                        //                                        ?.DeliveryServiceProviderOrderId ?? null,
+                        DeliveryServiceProviderOrderId = DeliveryServiceProviderRequestMapper
+                                                                .Where(x => x.DeliveryServiceProviderId == deliveryServiceProviderIdGroup.Key && x.DispatchRequestId == dispatchRequestId && x.IsActive == true)
+                                                                .OrderByDescending(o => o.CreateDate)
+                                                                .FirstOrDefault()
+                                                                ?.DeliveryServiceProviderOrderId ?? null,
 
                         ServiceProviderPerformance = deliveryServiceProviderIdGroup
                                                                 .GroupBy(createDatePersianStrGroup => createDatePersianStrGroup.CreateDatePersianStr)
