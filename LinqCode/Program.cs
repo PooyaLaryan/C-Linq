@@ -494,7 +494,7 @@ var location = locations[0];
 
 SendToVendorDto sendToVendorDto = new SendToVendorDto
 {
-    Vendors = location.Shipments?.Select(x => x.VendorId).Distinct().ToList() ?? new List<int>(),
+    Vendors = location.Shipments?.Select(x => x.VendorId).Distinct().ToList(),
     Vendor = location.Shipments?.Any(x => x.VendorId == (int)Vendors.Okala) ?? false ? SendToVendor.Okala : default,
 };
 

@@ -98,7 +98,7 @@ class SendToVendorDto
         { (int)LinqCode.Vendors.oFood, SendToVendor.TapsiFood },
     };
 
-    public IEnumerable<int> Vendors { get; set; }
+    public IEnumerable<int>? Vendors { get; set; }
     public SendToVendor Vendor { get; set; } = SendToVendor.None;
 
     public SendToVendor ShareVendor
@@ -110,7 +110,7 @@ class SendToVendorDto
 
             var shareVendor = Vendors.FirstOrDefault(x => CandidateVendor.ContainsKey(x));
 
-            return CandidateVendor.ContainsKey(shareVendor) ? CandidateVendor[shareVendor] : SendToVendor.None;
+            return CandidateVendor.ContainsKey(shareVendor) ? CandidateVendor[shareVendor] : default;
         }
     }
 }
