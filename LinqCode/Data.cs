@@ -52,7 +52,8 @@ internal record Loan
     public IList<Bullet> Bullets { get; set; }
 }
 
-internal record Bullet {
+internal record Bullet
+{
     public string Title { get; set; }
 }
 
@@ -79,18 +80,39 @@ class DriverLocation
 class Shipment
 {
     public int Id { get; set; }
-    public int VendorId {  get; set; }
+    public int VendorId { get; set; }
 }
 
 
 public enum SendToVendor : int
 {
     None = 0,
-    Okala = 1
+    Okala = 37,
+    TapsiFood = 41
 }
 class SendToVendorDto
 {
+    private IDictionary<int, SendToVendor> CandidateVendor => new Dictionary<int, SendToVendor>()
+    {
+        { (int)LinqCode.Vendors.Okala, SendToVendor.Okala },
+        { (int)LinqCode.Vendors.oFood, SendToVendor.TapsiFood },
+    };
+
+    public IEnumerable<int> Vendors { get; set; }
     public SendToVendor Vendor { get; set; } = SendToVendor.None;
+
+    public SendToVendor ShareVendor
+    {
+        get
+        {
+            if (Vendors == null || !Vendors.Any())
+                return SendToVendor.None;
+
+            var shareVendor = Vendors.FirstOrDefault(x => CandidateVendor.ContainsKey(x));
+
+            return CandidateVendor.ContainsKey(shareVendor) ? CandidateVendor[shareVendor] : SendToVendor.None;
+        }
+    }
 }
 
 public enum Vendors : int

@@ -8,9 +8,9 @@ using Person = LinqCode.Person;
 
 
 List<int> randomList = new List<int>();
-for(int i = 1;i <= 10; i++)
+for (int i = 1; i <= 10; i++)
 {
-    randomList.Add( Random.Shared.Next(0,5));
+    randomList.Add(Random.Shared.Next(0, 5));
 }
 
 #region Init Data
@@ -339,7 +339,7 @@ output.ForEach(x => Console.WriteLine(x));
 
 #region selectMany
 Console.Clear();
-var selecrmanyOutput = loans.SelectMany(x=>x.Bullets).Select(x=>x.Title).ToList();
+var selecrmanyOutput = loans.SelectMany(x => x.Bullets).Select(x => x.Title).ToList();
 selecrmanyOutput.ForEach(x => Console.WriteLine(x));
 
 
@@ -354,7 +354,8 @@ var loans2 = Enumerable.Range(1, 3).Select(_ => new Loan
     }).ToList(),
 }).ToList();
 
-var loans2Result = loans2.SelectMany(x => x.Bullets, (x, y) => new {
+var loans2Result = loans2.SelectMany(x => x.Bullets, (x, y) => new
+{
     Amount = x.Amount,
     Dong = x.Dong,
     Number = x.Number,
@@ -380,7 +381,7 @@ zipOurput.ForEach(x => Console.WriteLine($"Name :{x.name} - Age : {x.age} {Envir
 
 #region DistinctBy
 Console.Clear();
-var distinctByOutput = itemsPeople.DistinctBy(x=>x.ItemId).ToList();
+var distinctByOutput = itemsPeople.DistinctBy(x => x.ItemId).ToList();
 distinctByOutput.ForEach(x => Console.WriteLine(x.ItemId));
 
 Console.Clear();
@@ -402,20 +403,20 @@ Console.WriteLine(JoinListWithComaExcetLast);
 
 //Left Join 
 var leftJoinPeople = from people in people1
-                join item in itemsPeople on people.Id equals item.PersonId into gg
-                from subgroup in gg.DefaultIfEmpty()
-                select new
-                {
-                    a = people.Name,
-                    b = subgroup?.ItemId?? null,
-                };
+                     join item in itemsPeople on people.Id equals item.PersonId into gg
+                     from subgroup in gg.DefaultIfEmpty()
+                     select new
+                     {
+                         a = people.Name,
+                         b = subgroup?.ItemId ?? null,
+                     };
 
 
 
 #region Any
 var driverLocation1 = new DriverLocation
 {
-    Shipments = new List<Shipment> { new Shipment { Id = 1 }, new Shipment { Id = 2 } , new Shipment { Id = 15} }
+    Shipments = new List<Shipment> { new Shipment { Id = 1 }, new Shipment { Id = 2 }, new Shipment { Id = 15 } }
 };
 
 var driverLocation2 = new DriverLocation
@@ -434,11 +435,11 @@ IList<FleetMetrics> metrics = new List<FleetMetrics>();
 for (int i = 0; i < 1000; i++)
 {
     metrics.Add(new FleetMetrics
-                        {   
-                            FleetId = Random.Shared.Next(1,10), 
-                            Type = (FleetEventType)Random.Shared.Next(1,4), 
-                            CreateDate = DateTime.Now.AddDays(Random.Shared.Next(1,3))
-                        });
+    {
+        FleetId = Random.Shared.Next(1, 10),
+        Type = (FleetEventType)Random.Shared.Next(1, 4),
+        CreateDate = DateTime.Now.AddDays(Random.Shared.Next(1, 3))
+    });
 };
 var fleetEventType = FleetEventType.None;
 
@@ -462,10 +463,12 @@ for (int i = 0; i < 10; i++)
 {
     int vendor = 0;
     
-    do
-    {
-        vendor = Enum.GetValues<Vendors>().Cast<int>().ToList()[Random.Shared.Next(0, 7)];
-    } while (vendor == (int)Vendors.Okala);
+    //do
+    //{
+    //    vendor = Enum.GetValues<Vendors>().Cast<int>().ToList()[Random.Shared.Next(0, 7)];
+    //} while (vendor == (int)Vendors.Okala || vendor == (int)Vendors.oFood);
+
+    vendor = Enum.GetValues<Vendors>().Cast<int>().ToList()[Random.Shared.Next(0, 7)];
 
     locations.Add(new DriverLocation
     {
@@ -479,7 +482,7 @@ for (int i = 0; i < 10; i++)
 }
 
 List<DriverLocation> locations2 = new List<DriverLocation>();
-for (int i = 0;i < 10; i++)
+for (int i = 0; i < 10; i++)
 {
     locations2.Add(new DriverLocation
     {
@@ -488,21 +491,30 @@ for (int i = 0;i < 10; i++)
 }
 
 var location = locations[0];
+
 SendToVendorDto sendToVendorDto = new SendToVendorDto
 {
+    Vendors = location.Shipments?.Select(x => x.VendorId).Distinct().ToList() ?? new List<int>(),
     Vendor = location.Shipments?.Any(x => x.VendorId == (int)Vendors.Okala) ?? false ? SendToVendor.Okala : default,
 };
 
+var shareVendor1 = sendToVendorDto.ShareVendor;
+
 SendToVendorDto sendToVendor2 = new SendToVendorDto
 {
+    Vendors = locations.Where(x => x.Shipments != null && x.Shipments.Any()).SelectMany(x => x.Shipments).Select(x => x.VendorId).Distinct().ToList(),
     Vendor = locations.Where(x => x.Shipments?.Any(a => a.VendorId == (int)Vendors.Okala) ?? false).Select(x => SendToVendor.Okala).FirstOrDefault(),
 };
 
+var shareVendor2 = sendToVendor2.ShareVendor;
+
 SendToVendorDto sendToVendor3 = new SendToVendorDto
 {
+    Vendors = locations2.Where(x => x.Shipments != null && x.Shipments.Any()).SelectMany(x => x.Shipments).Select(x => x.VendorId).Distinct().ToList(),
     Vendor = locations2.Where(x => x.Shipments?.Any(a => a.VendorId == (int)Vendors.Okala) ?? false).Select(x => SendToVendor.Okala).FirstOrDefault(),
 };
 
+var shareVendor3 = sendToVendor3.ShareVendor;
 
 FleetPreAssignmentStateQuery fleetPreAssignmentStateQuery = new();
 fleetPreAssignmentStateQuery.Run();
