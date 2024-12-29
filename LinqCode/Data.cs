@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace LinqCode;
 
+
+internal class SampleClass
+{
+    public FleetEventType? FleetEventType { get; set; }
+    public DateTime StartDateTime { get; set; }  
+    public string CustomDate { get; set; } = string.Empty;
+}
+
 internal record Person
 {
     public int Id { get; set; }

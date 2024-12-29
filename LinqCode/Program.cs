@@ -2,10 +2,15 @@
 using Bogus;
 using LinqCode;
 using LinqCode.FleetPreAssignmentState;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using Person = LinqCode.Person;
 
+SimpleTestClass simpleTestClass = new SimpleTestClass();
+simpleTestClass.Run1();
+simpleTestClass.Run2();
 
 List<int> randomList = new List<int>();
 for (int i = 1; i <= 10; i++)
@@ -427,6 +432,14 @@ var driverLocation2 = new DriverLocation
 bool has14Id1 = driverLocation1.Shipments.Any(x => x.Id == 15);
 bool has14Id2 = driverLocation2.Shipments?.Any(x => x.Id == 15) ?? false;
 
+
+#endregion
+
+
+#region Exists
+//The 𝐄𝐱𝐢𝐬𝐭𝐬() 𝐦𝐞𝐭𝐡𝐨𝐝 𝐢𝐬 specifically 𝐝𝐞𝐬𝐢𝐠𝐧𝐞𝐝 𝐟𝐨𝐫 𝐋𝐢𝐬𝐭 𝐜𝐨𝐥𝐥𝐞𝐜𝐭𝐢𝐨𝐧𝐬, It serves a narrower purpose. So, Exists() is an instance method which functions very similar to Any.
+//Performance - wise Any seems to be slower. When using List collections, Exists() offers better performance. 𝐘𝐨𝐮 𝐬𝐡𝐨𝐮𝐥𝐝 𝐩𝐫𝐞𝐟𝐞𝐫 𝐄𝐱𝐢𝐬𝐭𝐬() 𝐢𝐧𝐬𝐭𝐞𝐚𝐝 𝐨𝐟 𝐀𝐧𝐲() to see if at least one item in a collection meets a specified condition.
+var existsResult = driverLocation1.Shipments.ToList().Exists(x => x.VendorId == 15);
 
 #endregion
 
