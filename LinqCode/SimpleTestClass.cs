@@ -21,7 +21,7 @@ namespace LinqCode
             SampleClass simpleClass = new SampleClass
             { 
                 StartDateTime = DateTime.Now,
-                CustomDate = DateTime.Now.ToString(),
+                CustomDate = DateTime.Now.ToString("yyyyMMdd hh:mm:ss"),
             };
 
             string json = JsonConvert.SerializeObject(simpleClass);
