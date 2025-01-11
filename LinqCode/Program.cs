@@ -292,8 +292,12 @@ var take = collection1.Take(2).ToList();
 take.ForEach(x => Console.WriteLine(x));
 
 Console.Clear();
+var p1 = people1.Take(1..4).ToList();
+take.ForEach(x => Console.WriteLine(x));
+
+Console.Clear();
 var take1 = collection1.TakeWhile(x => x.Length == 3).ToList();
-take1.ForEach(x => Console.WriteLine(x));
+p1.ForEach(x => Console.WriteLine(x));
 
 Console.Clear();
 var take2 = collection1.TakeWhile((x, i) => x.Length > i).ToList();
