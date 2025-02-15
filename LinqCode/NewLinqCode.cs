@@ -12,5 +12,10 @@ namespace LinqCode
         {
             var p = people.Take(1..4).ToList();
         }
+
+        public static void TestNullInList()
+        {
+
+        }
     }
 }

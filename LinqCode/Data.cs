@@ -57,7 +57,7 @@ internal record Loan
     public int Dong { get; set; }
     public int Number { get; set; }
     public decimal Amount { get; set; }
-    public IList<Bullet> Bullets { get; set; }
+    public IList<Bullet>? Bullets { get; set; }
 }
 
 internal record Bullet

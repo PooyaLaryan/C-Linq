@@ -1,16 +1,16 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Bogus;
+﻿using Bogus;
 using LinqCode;
 using LinqCode.FleetPreAssignmentState;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using Person = LinqCode.Person;
 
 SimpleTestClass simpleTestClass = new SimpleTestClass();
 simpleTestClass.Run1();
 simpleTestClass.Run2();
+simpleTestClass.TestNullInList();
+simpleTestClass.UsingSelectMany();
+simpleTestClass.DoIfAllDataNotNullOrWhiteSpace();
 
 List<int> randomList = new List<int>();
 for (int i = 1; i <= 10; i++)
