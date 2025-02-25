@@ -12,6 +12,9 @@ simpleTestClass.TestNullInList();
 simpleTestClass.UsingSelectMany();
 simpleTestClass.DoIfAllDataNotNullOrWhiteSpace();
 
+TestCustomList testCustomList = new TestCustomList();
+testCustomList.Run();
+
 List<int> randomList = new List<int>();
 for (int i = 1; i <= 10; i++)
 {
