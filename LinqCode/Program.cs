@@ -14,6 +14,8 @@ simpleTestClass.DoIfAllDataNotNullOrWhiteSpace();
 
 TestCustomList testCustomList = new TestCustomList();
 testCustomList.Run();
+await testCustomList.Run2();
+testCustomList.RetrievingCurrentVendorParcelCodesAsync();
 
 List<int> randomList = new List<int>();
 for (int i = 1; i <= 10; i++)

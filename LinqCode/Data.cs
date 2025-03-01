@@ -96,7 +96,8 @@ public enum SendToVendor : int
 {
     None = 0,
     Okala = 37,
-    TapsiFood = 41
+    TapsiFood = 41,
+    TapsiPharmacy = 422,
 }
 class SendToVendorDto
 {
