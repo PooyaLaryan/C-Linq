@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Bogus;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,40 @@ internal class SampleClass
     public FleetEventType? FleetEventType { get; set; }
     public DateTime StartDateTime { get; set; }  
     public string CustomDate { get; set; } = string.Empty;
+}
+
+
+internal record SampleForSelectMany
+{
+    public static IEnumerable<SampleForSelectMany> CreateInstance(){
+
+        List<SampleForSelectMany> sampleForSelectManies = new List<SampleForSelectMany>();
+        
+        for (int i = 0; i < Random.Shared.Next(10); i++)
+        {
+            SampleForSelectMany instance = new();
+
+            instance.people = new List<Person>()
+            {
+                new Person(){ BirthDay = new Faker().Date.Past(30), Id = 1, LastName = new Faker().Person.LastName, Name = new Faker().Person.FirstName, StandardId = 10 },
+                new Person(){ BirthDay = new Faker().Date.Past(10), Id = 2, LastName = new Faker().Person.LastName, Name = new Faker().Person.FirstName, StandardId = 10 },
+                new Person(){ BirthDay = new Faker().Date.Past(15), Id = 3, LastName = new Faker().Person.LastName, Name = new Faker().Person.FirstName, StandardId = 10 },
+            };
+
+            instance.loan = new Loan()
+            {
+                Amount = Random.Shared.Next(10,50),
+                Dong = Random.Shared.Next(1, 20),
+                Number = Random.Shared.Next(1000, 100000),
+            };
+
+            sampleForSelectManies.Add(instance);
+        }
+
+        return sampleForSelectManies;
+    }
+    public List<Person> people { get; set; }
+    public Loan loan { get; set; }
 }
 
 internal record Person

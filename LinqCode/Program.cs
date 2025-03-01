@@ -15,6 +15,7 @@ simpleTestClass.DoIfAllDataNotNullOrWhiteSpace();
 TestCustomList testCustomList = new TestCustomList();
 testCustomList.Run();
 await testCustomList.Run2();
+await testCustomList.Run3();
 testCustomList.RetrievingCurrentVendorParcelCodesAsync();
 
 List<int> randomList = new List<int>();
@@ -355,6 +356,14 @@ output.ForEach(x => Console.WriteLine(x));
 Console.Clear();
 var selecrmanyOutput = loans.SelectMany(x => x.Bullets).Select(x => x.Title).ToList();
 selecrmanyOutput.ForEach(x => Console.WriteLine(x));
+
+
+Console.Clear();
+var select_many_data = SampleForSelectMany.CreateInstance();
+var select_many = select_many_data
+    .SelectMany(x => x.people, (y, z) => new { Amount = y.loan.Amount, Name = $"{z.Name} {z.LastName}" })
+    .ToList();
+select_many.ForEach(x => Console.WriteLine($"{x.Name} loan {x.Amount}"));
 
 
 var loans2 = Enumerable.Range(1, 3).Select(_ => new Loan

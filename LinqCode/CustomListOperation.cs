@@ -101,7 +101,17 @@ namespace LinqCode
 
             foreach (var item in await customListOperation.SendToVendorsAsync())
             {
-                Console.WriteLine(item);
+                Console.WriteLine($"Send Data for {item}");
+            }
+        }
+
+        public async Task Run3()
+        {
+            CustomListOperation<FleetDto> customListOperation = new();
+
+            foreach (var item in await customListOperation.SendToVendorsAsync())
+            {
+                Console.WriteLine($"Send Data for {item}");
             }
         }
 
